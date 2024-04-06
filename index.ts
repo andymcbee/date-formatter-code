@@ -1,3 +1,3 @@
 import formatDate from "./functions/formatDate/formatDate";
 
-formatDate(new Date(), "test");
+formatDate(new Date(), "dd-dd-ddd");
