@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.12% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/41</span>
+                <span class='fraction'>40/42</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95% </span>
+                <span class="strong">95.12% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>38/40</span>
+                <span class='fraction'>39/41</span>
             </div>
         
             
@@ -201,7 +201,14 @@
 <a name='L136'></a><a href='#L136'>136</a>
 <a name='L137'></a><a href='#L137'>137</a>
 <a name='L138'></a><a href='#L138'>138</a>
-<a name='L139'></a><a href='#L139'>139</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -213,6 +220,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,12 +272,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
@@ -336,6 +345,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -350,7 +364,7 @@ const validSeparators = {
 &nbsp;
 type DateFormatTokenKey = keyof typeof dateFormatTokens;
 &nbsp;
-const dateFormatTokens = {
+export const dateFormatTokens = {
   d: "day",
   dd: "day",
   ddd: "day",
@@ -363,16 +377,21 @@ const dateFormatTokens = {
   yyyy: "year",
 };
 &nbsp;
-type DayPart = "d" | "dd" | "ddd" | "dddd" | "";
-type MonthPart = "m" | "mm" | "mmm" | "mmmm" | "";
-type YearPart = "yy" | "yyyy" | "";
-type separator = " " | "." | "-" | "/" | "";
+type DayPart = "d" | "dd" | "ddd" | "dddd";
+type MonthPart = "m" | "mm" | "mmm" | "mmmm";
+type YearPart = "yy" | "yyyy";
+type separator = " " | "." | "-" | "/";
 &nbsp;
-export type FormatParserResult = {
+type FormatParserWorkingObject = {
   separator: separator;
   day: DayPart;
   month: MonthPart;
   year: YearPart;
+  orderedFormat: Array&lt;DayPart | MonthPart | YearPart&gt;;
+};
+&nbsp;
+export type FormatParserResult = {
+  separator: separator;
   orderedFormat: Array&lt;DayPart | MonthPart | YearPart&gt;;
 };
 &nbsp;
@@ -397,24 +416,21 @@ function isolateSeparator(inputFormat: string) {
   return separator as separator;
 }
 &nbsp;
-export function inputFormatParser(inputFormat: InputFormat) {
+export function inputFormatParser(
+  inputFormat: InputFormat
+): FormatParserResult {
   const inputFormatLowcase = inputFormat.toLowerCase();
-  /*   // this is redundant because isolateSeparator will throw an error if null
-  // confirm first char is alpha
-  if (!isAlphaChar(inputFormatLowcase[0])) {
-    throw new Error("Invalid format structure.");
-  } */
 &nbsp;
   //isolate separator
   const separator = isolateSeparator(inputFormatLowcase);
 &nbsp;
   const formatArray = inputFormatLowcase.split(separator);
 &nbsp;
-  let validFormat: FormatParserResult = {
-    separator: "",
-    day: "",
-    month: "",
-    year: "",
+  let validFormat: FormatParserWorkingObject = {
+    separator: "" as any,
+    day: "" as any,
+    month: "" as any,
+    year: "" as any,
     orderedFormat: [],
   };
 &nbsp;
@@ -474,7 +490,12 @@ export function inputFormatParser(inputFormat: InputFormat) {
       "Invalid format provided. Include valid day, month year and separator."
     );
   } else {
-    return validFormat;
+    //create return object
+    const result: FormatParserResult = {
+      separator: validFormat.separator,
+      orderedFormat: validFormat.orderedFormat,
+    };
+    return result;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -484,7 +505,7 @@ export function inputFormatParser(inputFormat: InputFormat) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-06T20:44:48.041Z
+                at 2024-04-07T14:20:57.316Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

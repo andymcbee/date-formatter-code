@@ -1,4 +1,4 @@
-import type { InputDate, InputFormat } from "../../types";
+import type { InputFormat } from "../formatDate/formatDate";
 import { isAlphaChar } from "../../utils/isAlphaChar";
 const validSeparators = {
   " ": true,
@@ -9,7 +9,7 @@ const validSeparators = {
 
 type DateFormatTokenKey = keyof typeof dateFormatTokens;
 
-const dateFormatTokens = {
+export const dateFormatTokens = {
   d: "day",
   dd: "day",
   ddd: "day",
@@ -22,16 +22,21 @@ const dateFormatTokens = {
   yyyy: "year",
 };
 
-type DayPart = "d" | "dd" | "ddd" | "dddd" | "";
-type MonthPart = "m" | "mm" | "mmm" | "mmmm" | "";
-type YearPart = "yy" | "yyyy" | "";
-type separator = " " | "." | "-" | "/" | "";
+type DayPart = "d" | "dd" | "ddd" | "dddd";
+type MonthPart = "m" | "mm" | "mmm" | "mmmm";
+type YearPart = "yy" | "yyyy";
+type separator = " " | "." | "-" | "/";
 
-export type FormatParserResult = {
+type FormatParserWorkingObject = {
   separator: separator;
   day: DayPart;
   month: MonthPart;
   year: YearPart;
+  orderedFormat: Array<DayPart | MonthPart | YearPart>;
+};
+
+export type FormatParserResult = {
+  separator: separator;
   orderedFormat: Array<DayPart | MonthPart | YearPart>;
 };
 
@@ -56,24 +61,21 @@ function isolateSeparator(inputFormat: string) {
   return separator as separator;
 }
 
-export function inputFormatParser(inputFormat: InputFormat) {
+export function inputFormatParser(
+  inputFormat: InputFormat
+): FormatParserResult {
   const inputFormatLowcase = inputFormat.toLowerCase();
-  /*   // this is redundant because isolateSeparator will throw an error if null
-  // confirm first char is alpha
-  if (!isAlphaChar(inputFormatLowcase[0])) {
-    throw new Error("Invalid format structure.");
-  } */
 
   //isolate separator
   const separator = isolateSeparator(inputFormatLowcase);
 
   const formatArray = inputFormatLowcase.split(separator);
 
-  let validFormat: FormatParserResult = {
-    separator: "",
-    day: "",
-    month: "",
-    year: "",
+  let validFormat: FormatParserWorkingObject = {
+    separator: "" as any,
+    day: "" as any,
+    month: "" as any,
+    year: "" as any,
     orderedFormat: [],
   };
 
@@ -133,6 +135,11 @@ export function inputFormatParser(inputFormat: InputFormat) {
       "Invalid format provided. Include valid day, month year and separator."
     );
   } else {
-    return validFormat;
+    //create return object
+    const result: FormatParserResult = {
+      separator: validFormat.separator,
+      orderedFormat: validFormat.orderedFormat,
+    };
+    return result;
   }
 }

@@ -5,9 +5,6 @@ describe("inputFormatParser", () => {
     const validFormat = "dd-mm-yyyy";
     const result = inputFormatParser(validFormat);
 
-    expect(result.day).toBe("dd");
-    expect(result.month).toBe("mm");
-    expect(result.year).toBe("yyyy");
     expect(result.separator).toBe("-");
     expect(result.orderedFormat).toEqual(["dd", "mm", "yyyy"]);
   });
