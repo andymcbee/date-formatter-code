@@ -45,6 +45,7 @@ function isolateSeparator(inputFormat: string) {
   // identify first non-alpha char
   Array.from(inputFormat).forEach((char) => {
     if (!isAlphaChar(char)) {
+      //find first non-alpha char and assign as separator
       if (char in validSeparators) {
         // Assert `char` as `separator` type after checking it's a valid key
         separator = char as separator;
@@ -71,10 +72,16 @@ export function inputFormatParser(
 
   const formatArray = inputFormatLowcase.split(separator);
 
+  // validFormat never gets reassigned, however the existing properties are mutable so keep it as let for readability
+  // eslint-disable-next-line prefer-const
   let validFormat: FormatParserWorkingObject = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     separator: "" as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     day: "" as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     month: "" as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     year: "" as any,
     orderedFormat: [],
   };

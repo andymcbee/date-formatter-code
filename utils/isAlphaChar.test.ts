@@ -19,6 +19,8 @@ describe("isAlphaChar", () => {
     const string = 1;
 
     try {
+      // Mocking an error, allow any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       isAlphaChar(string as any);
       // If the function does not throw an error, fail the test
       fail("Expected isAlphaChar to throw an error.");
