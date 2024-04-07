@@ -1,3 +1,11 @@
+Run program:
+
+Add desired data (date and format type) to index.ts
+npm run start
+
+Run test suite:
+npm run test
+
 > **TASKS**
 >
 > Create a function that given a Date and a string format, returns a string representation of the date, with the specified format.
