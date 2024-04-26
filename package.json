@@ -1,17 +1,21 @@
 {
-  "name": "readable-date-time",
+  "name": "date-to-string",
   "version": "1.0.0",
   "description": "Human readable date time converter.",
   "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm test && npm run build"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Andrew McBurney",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@types/jest": "^29.5.12",

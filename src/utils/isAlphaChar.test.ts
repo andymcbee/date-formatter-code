@@ -10,7 +10,7 @@ describe("isAlphaChar", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe(
+      expect((error as Error).message).toBe(
         "Invalid input. isAlphaChar accepts a single char string as an input."
       );
     }
@@ -27,7 +27,7 @@ describe("isAlphaChar", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe(
+      expect((error as Error).message).toBe(
         "Invalid input. isAlphaChar accepts a string as an input."
       );
     }

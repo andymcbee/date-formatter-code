@@ -19,7 +19,7 @@ describe("inputFormatParser", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe("Invalid separator.");
+      expect((error as Error).message).toBe("Invalid separator.");
     }
   });
 
@@ -33,7 +33,7 @@ describe("inputFormatParser", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe("No separator detected.");
+      expect((error as Error).message).toBe("No separator detected.");
     }
   });
 
@@ -47,7 +47,7 @@ describe("inputFormatParser", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe("Duplicate day part detected.");
+      expect((error as Error).message).toBe("Duplicate day part detected.");
     }
   });
 
@@ -61,7 +61,7 @@ describe("inputFormatParser", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe("Duplicate month part detected.");
+      expect((error as Error).message).toBe("Duplicate month part detected.");
     }
   });
 
@@ -75,7 +75,7 @@ describe("inputFormatParser", () => {
     } catch (error) {
       // Assert that the error thrown is an instance of Error
       expect(error).toBeInstanceOf(Error);
-      expect(error.message).toBe("Duplicate year part detected.");
+      expect((error as Error).message).toBe("Duplicate year part detected.");
     }
   });
 });
