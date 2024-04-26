@@ -1,12 +1,13 @@
 {
-  "name": "date-formatter-code-challenge",
+  "name": "readable-date-time",
   "version": "1.0.0",
-  "description": "Date format implementation",
-  "main": "index.js",
+  "description": "Human readable date time converter.",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node src/index.ts",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
