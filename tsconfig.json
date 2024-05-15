@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "module": "ESNext", // Adjust module type to ES module syntax
+    "module": "CommonJS",
     "target": "ES6",
     "strict": true,
     "esModuleInterop": true,
