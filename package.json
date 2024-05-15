@@ -1,5 +1,5 @@
 {
-  "name": "date-to-string-js",
+  "name": "date-to-string",
   "version": "1.0.0",
   "description": "Convert Javascript date objects into human readable date strings using various formats.",
   "main": "dist/index.js",

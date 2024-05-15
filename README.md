@@ -1,6 +1,6 @@
 ## Usage:
 
-import { dateToString } from "date-to-string-js";<br><br>
+import { dateToString } from "date-to-string";<br><br>
 
 const date = new Date("December 17, 1995");<br><br>
 
